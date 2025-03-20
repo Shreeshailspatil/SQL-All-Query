@@ -1,0 +1,190 @@
+SQL> 
+SQL> --1.MAQTD 2ND MINIMUM SALARY
+
+
+  1  SELECT MIN(SAL)
+  2  FROM EMP
+  3  WHERE SAL>(SELECT MIN(SAL)
+  4* FROM EMP)
+  5  /
+
+  MIN(SAL)                                                                                          
+----------                                                                                          
+       950                                                                                          
+
+SQL> --2.MAQTD 5TH MAXIMUM SALARY
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MAX(SAL)
+  4  FROM EMP
+  5  WHERE SAL<(SELECT MAX(SAL)
+  6  FROM EMP
+  7  WHERE SAL<(SELECT MAX(SAL)
+  8  FROM EMP
+  9  WHERE SAL<(SELECT MAX(SAL)
+ 10  FROM EMP))));
+
+  MAX(SAL)                                                                                          
+----------                                                                                          
+      2450                                                                                          
+
+SQL> --3.MAQTD NAME OF THE EMPLOYEE EARNING 3RD MAXIMUM SALARY
+
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MAX(SAL)
+  4  FROM EMP
+  5  WHERE SAL<(SELECT MAX(SAL)
+  6  FROM EMP
+  7  WHERE SAL<(SELECT MAX(SAL)
+  8* FROM EMP)))
+SQL> /
+
+ENAME                                                                                               
+----------                                                                                          
+SMITH                                                                                               
+ALLEN                                                                                               
+WARD                                                                                                
+MARTIN                                                                                              
+BLAKE                                                                                               
+CLARK                                                                                               
+TURNER                                                                                              
+ADAMS                                                                                               
+JAMES                                                                                               
+MILLER                                                                                              
+
+10 rows selected.
+
+SQL> --4.MAQTD EMPNO OF THE EMPLOYEE EARNING 2ND MAXIMUM SALARY
+
+  1  SELECT EMPNO
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MAX(SAL)
+  4  FROM EMP
+  5  WHERE SAL<(SELECT MAX(SAL)
+  6* FROM EMP))
+SQL> /
+
+     EMPNO                                                                                          
+----------                                                                                          
+      7369                                                                                          
+      7499                                                                                          
+      7521                                                                                          
+      7566                                                                                          
+      7654                                                                                          
+      7698                                                                                          
+      7782                                                                                          
+      7844                                                                                          
+      7876                                                                                          
+      7900                                                                                          
+      7934                                                                                          
+
+11 rows selected.
+
+SQL> 
+SQL> --5.MAQTD DEPARTMENT NAME OF AN EMPLOYEE GETTING 4TH MAX SAL
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE SAL<(SELECT MAX(SAL)
+  6  FROM EMP
+  7  WHERE SAL<(SELECT MAX(SAL)
+  8  FROM EMP
+  9  WHERE SAL<(SELECT MAX(SAL)
+ 10  FROM EMP
+ 11  WHERE SAL<(SELECT MAX(SAL)
+ 12* FROM EMP)))))
+SQL> /
+
+DNAME                                                                                               
+--------------                                                                                      
+SALES                                                                                               
+RESEARCH                                                                                            
+ACCOUNTING                                                                                          
+
+SQL> --6.MAQTD DETAILS OF THE EMPLOYEE WHO WAS HIRED 2ND
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE HIREDATE>(SELECT MIN(HIREDATE)
+  4  FROM EMP);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO               
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------               
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30               
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30               
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20               
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30               
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30               
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10               
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20               
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10               
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30               
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20               
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30               
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20               
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10               
+
+13 rows selected.
+
+SQL> --7.MAQTD NAME OF THE EMPLOYEE HIRED BEFORE THE LAST EMPLOYEE
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE HIREDATE >(SELECT MAX(HIREDATE)
+  4  FROM EMP
+  5  WHERE HIREDATE>(SELECT MAX(HIREDATE)
+  6* FROM EMP))
+SQL> /
+
+no rows selected
+
+SQL> --8.MAQTD LOC OF THE EMPLOYEE WHO WAS HIRED FIRST
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE HIREDATE<(SELECT MIN(HIREDATE)
+  6* FROM EMP))
+  7  /
+
+no rows selected
+
+SQL> --9.MAQTD DETAILS OF THE EMPLOYEE EARNING 7TH MINIMUM SALARY
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MIN(SAL)
+  4  FROM EMP
+  5  WHERE SAL<(SELECT MIN(SAL)
+  6  FROM EMP
+  7  WHERE SAL<(SELECT MIN(SAL)
+  8  FROM EMP
+  9  WHERE SAL<(SELECT MIN(SAL)
+ 10  FROM EMP
+ 11  WHERE SAL<(SELECT MIN(SAL)
+ 12  FROM EMP
+ 13  WHERE SAL<(SELECT MIN(SAL)
+ 14  FROM EMP
+ 15  WHERE SAL<(SELECT MIN(SAL)
+ 16* FROM EMP)))))))
+SQL> /
+
+no rows selected
+
+SQL> --10.MAQTD DNAME OF EMPLOYEE GETTING 2ND MAXIMUM SALARY
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE SAL>(SELECT MAX(SAL)
+  6  FROM EMP
+  7  WHERE SAL>(SELECT MAX(SAL)
+  8  FROM EMP)));
+
+no rows selected
+
+SQL> SPOOL OFF

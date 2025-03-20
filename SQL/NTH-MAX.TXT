@@ -1,0 +1,240 @@
+--1
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP))
+  5* WHERE SINO =3
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      1300                                                                                          
+
+SQL> 
+SQL> 
+SQL> --2.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL))
+  6* WHERE SINO IN (1,5)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+       800                                                                                          
+      1300                                                                                          
+
+SQL> 
+
+
+SQL> --3.
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL DESC))
+  6  WHERE SINO = 1 OR SINO =(SELECT COUNT(DISTINCT SAL)
+  7* FROM EMP)
+  8  /
+
+       SAL                                                                                          
+----------                                                                                          
+      5000                                                                                          
+       800                                                                                          
+
+SQL> 
+SQL> --4.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL ))
+  6  WHERE SINO <=(SELECT COUNT(DISTINCT SAL)*50/100
+  7* FROM EMP)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+       800                                                                                          
+       950                                                                                          
+      1100                                                                                          
+      1250                                                                                          
+      1300                                                                                          
+      1500                                                                                          
+
+6 rows selected.
+
+SQL> --5.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL ))
+  6  WHERE SINO <=(SELECT COUNT(DISTINCT SAL)*25/100
+  7* FROM EMP)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+       800                                                                                          
+       950                                                                                          
+      1100                                                                                          
+
+SQL> --6.
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL ))
+  6  WHERE SINO >(SELECT COUNT(DISTINCT SAL)*25/100
+  7* FROM EMP)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      1250                                                                                          
+      1300                                                                                          
+      1500                                                                                          
+      1600                                                                                          
+      2450                                                                                          
+      2850                                                                                          
+      2975                                                                                          
+      3000                                                                                          
+      5000                                                                                          
+
+9 rows selected.
+
+SQL> --7.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL  DESC))
+  6  WHERE SINO >(SELECT COUNT(DISTINCT SAL)-3
+  7* FROM EMP)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      1100                                                                                          
+       950                                                                                          
+       800                                                                                          
+
+SQL> --8.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL ))
+  6  WHERE SINO <(SELECT COUNT(DISTINCT SAL)*50/100
+  7* FROM EMP)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+       800                                                                                          
+       950                                                                                          
+      1100                                                                                          
+      1250                                                                                          
+      1300                                                                                          
+
+SQL> --9.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL DESC ))
+  6  WHERE SINO >(SELECT COUNT(DISTINCT SAL)*75/100
+  7* FROM EMP)
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      1100                                                                                          
+       950                                                                                          
+       800                                                                                          
+
+SQL> --10.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL DESC ))
+  6  WHERE SINO=(SELECT COUNT(DISTINCT SAL)-2
+  7* FROM EMP) OR SINO= 1
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      5000                                                                                          
+      1100                                                                                          
+
+SQL> --11.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL  ))
+  6  WHERE   SINO = 3 OR SINO >(SELECT COUNT(DISTINCT SAL)*75/100
+  7* FROM EMP) 
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      1100                                                                                          
+      2975                                                                                          
+      3000                                                                                          
+      5000                                                                                          
+
+SQL> --12.
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL  ))
+  6  WHERE   SINO IN (1,3,5) OR SINO =(SELECT COUNT(DISTINCT SAL)-2
+  7* FROM EMP) 
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+       800                                                                                          
+      1100                                                                                          
+      1300                                                                                          
+      2975                                                                                          
+
+SQL> --13.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SINO,SAL
+  3  FROM (SELECT DISTINCT SAL
+  4  FROM EMP
+  5  ORDER BY SAL  ))
+  6  WHERE   SINO =(SELECT COUNT(DISTINCT SAL)-5
+  7* FROM EMP) 
+SQL> /
+
+       SAL                                                                                          
+----------                                                                                          
+      1600                                                                                          
+
+SQL> 
+SQL> SPOOL OFF

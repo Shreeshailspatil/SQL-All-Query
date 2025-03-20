@@ -1,0 +1,212 @@
+
+SQL> select ename,sal*12 as "annual salary" from emp ;
+
+ENAME      annual salary
+---------- -------------
+SMITH               9600
+ALLEN              19200
+WARD               15000
+JONES              35700
+MARTIN             15000
+BLAKE              34200
+CLARK              29400
+SCOTT              36000
+KING               60000
+TURNER             18000
+ADAMS              13200
+JAMES              11400
+FORD               36000
+MILLER             15600
+
+14 rows selected.
+
+SQL> select ename,job,sal*6 as "half term salary" from emp ;
+
+ENAME      JOB       half term salary
+---------- --------- ----------------
+SMITH      CLERK                 4800
+ALLEN      SALESMAN              9600
+WARD       SALESMAN              7500
+JONES      MANAGER              17850
+MARTIN     SALESMAN              7500
+BLAKE      MANAGER              17100
+CLARK      MANAGER              14700
+SCOTT      ANALYST              18000
+KING       PRESIDENT            30000
+TURNER     SALESMAN              9000
+ADAMS      CLERK                 6600
+JAMES      CLERK                 5700
+FORD       ANALYST              18000
+MILLER     CLERK                 7800
+
+14 rows selected.
+
+SQL> select emp.*,sal*12+2000 as "annual bonus" from emp ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO annual bonus
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ------------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20        11600
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30        21200
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30        17000
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20        37700
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30        17000
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30        36200
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10        31400
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20        38000
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10        62000
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30        20000
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20        15200
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30        13400
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20        38000
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10        17600
+
+14 rows selected.
+
+SQL> select ename,sal,sal+sal*10/100 as "hike salary 10% " from emp ;
+
+ENAME             SAL hike salary 10%
+---------- ---------- ----------------
+SMITH             800              880
+ALLEN            1600             1760
+WARD             1250             1375
+JONES            2975           3272.5
+MARTIN           1250             1375
+BLAKE            2850             3135
+CLARK            2450             2695
+SCOTT            3000             3300
+KING             5000             5500
+TURNER           1500             1650
+ADAMS            1100             1210
+JAMES             950             1045
+FORD             3000             3300
+MILLER           1300             1430
+
+14 rows selected.
+SQL> select ename,sal-25/100 as "deduction salary" from emp ;
+
+ENAME      deduction salary
+---------- ----------------
+SMITH                799.75
+ALLEN               1599.75
+WARD                1249.75
+JONES               2974.75
+MARTIN              1249.75
+BLAKE               2849.75
+CLARK               2449.75
+SCOTT               2999.75
+KING                4999.75
+TURNER              1499.75
+ADAMS               1099.75
+JAMES                949.75
+FORD                2999.75
+MILLER              1299.75
+
+14 rows selected.
+
+SQL> select ename,sal*1+50 as "monthly hike" from emp ;
+
+ENAME      monthly hike
+---------- ------------
+SMITH               850
+ALLEN              1650
+WARD               1300
+JONES              3025
+MARTIN             1300
+BLAKE              2900
+CLARK              2500
+SCOTT              3050
+KING               5050
+TURNER             1550
+ADAMS              1150
+JAMES              1000
+FORD               3050
+MILLER             1350
+
+14 rows selected.
+
+SQL> select ename,sal*12-sal*12*10/100 as "annual salary deduction" from emp ;
+
+ENAME      annual salary deduction
+---------- -----------------------
+SMITH                         8640
+ALLEN                        17280
+WARD                         13500
+JONES                        32130
+MARTIN                       13500
+BLAKE                        30780
+CLARK                        26460
+SCOTT                        32400
+KING                         54000
+TURNER                       16200
+ADAMS                        11880
+JAMES                        10260
+FORD                         32400
+MILLER                       14040
+
+14 rows selected.
+
+SQL> select sal+comm as "totaly salary each emp" from emp ;
+
+totaly salary each emp
+----------------------
+
+                  1900
+                  1750
+
+                  2650
+
+
+
+
+                  1500
+
+
+
+
+
+14 rows selected.
+
+
+SQL> select emp.*,sal*12 from emp ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     SAL*12
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20       9600
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30      19200
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30      15000
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20      35700
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30      15000
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30      34200
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10      29400
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20      36000
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10      60000
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30      18000
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20      13200
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30      11400
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20      36000
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10      15600
+
+14 rows selected.
+
+SQL> select ename,job,sal-100 as "penalty 100rs" from emp ;
+
+ENAME      JOB       penalty 100rs
+---------- --------- -------------
+SMITH      CLERK               700
+ALLEN      SALESMAN           1500
+WARD       SALESMAN           1150
+JONES      MANAGER            2875
+MARTIN     SALESMAN           1150
+BLAKE      MANAGER            2750
+CLARK      MANAGER            2350
+SCOTT      ANALYST            2900
+KING       PRESIDENT          4900
+TURNER     SALESMAN           1400
+ADAMS      CLERK              1000
+JAMES      CLERK               850
+FORD       ANALYST            2900
+MILLER     CLERK              1200
+
+14 rows selected.
+
+SQL>

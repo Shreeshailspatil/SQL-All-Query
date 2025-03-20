@@ -1,0 +1,200 @@
+SQL> --1.MAQTD SMITHS REPORTING MANAGER'S NAME
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4  FROM EMP
+  5  WHERE ENAM='SMITH');
+WHERE ENAM='SMITH')
+      *
+ERROR at line 5:
+ORA-00904: "ENAM": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4  FROM EMP
+  5* WHERE ENAME='SMITH')
+SQL> /
+
+ENAME                                                                                               
+----------                                                                                          
+FORD                                                                                                
+
+SQL> --2.MAQTD ADAMS MANAGER'S MANAGER NAME
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4  FROM EMP
+  5  WHERE ENAME='ADAMS');
+
+ENAME                                                                                               
+----------                                                                                          
+SCOTT                                                                                               
+
+SQL> --3.MAQTD DNAME OF JONES MANAGER
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  FROM DEPT
+  7  WHERE ENAME='JONES'));
+WHERE EMPNO=(SELECT MGR
+             *
+ERROR at line 5:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME=(SELECT ENAME 
+  6  FROM EMP
+  7  WHERE EMPNO=(SELECT MGR
+  8  FROM EMP
+  9* WHERE ENAME='JONES')))
+SQL> /
+
+DNAME                                                                                               
+--------------                                                                                      
+ACCOUNTING                                                                                          
+
+SQL> --4.MAQTD MITEIER'S MANAGER'S SALARY
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4  FROM EMP
+  5  WHERE ENAME='MILLER');
+
+ENAME                                                                                               
+----------                                                                                          
+CLARK                                                                                               
+
+SQL> --5.MAQTD MITEIER'S MANAGER'S SALARY
+SQL> --5.MAQTD LOC OF SMITH'S MANAGER'S MANAGER
+SQL> SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(SELECT DEPTNO
+  4  FROMEMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  FROMEMP
+  7  WHERE ENAME='SMITH'));
+WHERE EMPNO=(SELECT MGR
+*
+ERROR at line 5:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(SELECT DEPTNO
+  4  FROMEMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  FROM EMP
+  7* WHERE ENAME='SMITH'))
+SQL> /
+WHERE EMPNO=(SELECT MGR
+*
+ERROR at line 5:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  FROM EMP
+  7* WHERE ENAME='SMITH'))
+SQL> /
+
+LOC                                                                                                 
+-------------                                                                                       
+DALLAS                                                                                              
+
+SQL> --6.MAQTD NAME OF THE EMPLOYEES REPORTING TO BLAKE
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE MGR=(SELECT EMPNO
+  4  FROM EMP
+  5  WHERE ENAME='BLAKE');
+
+ENAME                                                                                               
+----------                                                                                          
+ALLEN                                                                                               
+WARD                                                                                                
+MARTIN                                                                                              
+TURNER                                                                                              
+JAMES                                                                                               
+
+SQL> --7.MAQTD NUMBER OF EMPLOYEES REPORTING TO KING
+SQL> 
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4  FROM EMP
+  5  WHERE ENAME='KING');
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         0                                                                                          
+
+SQL> --8.MAQTD ENAMES OF THE EMPLOYEES REPORTING TO BLAKE'S MANAGER
+SQL> 
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME IN(SELECT ENAME
+  4  FROM EMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  WHERE ENAME='BLAKE'));
+WHERE ENAME='BLAKE'))
+*
+ERROR at line 6:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME IN(SELECT ENAME
+  4  FROM EMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  FROM EMP
+  7* WHERE ENAME='BLAKE'))
+SQL> /
+
+ENAME                                                                                               
+----------                                                                                          
+KING                                                                                                
+
+SQL> --10.MAQTD NUMBER OF EMPLOYEES REPORTING TO FORD'S MANAGER
+SQL> 
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME IN(SELECT ENAME
+  4  FROM EMP
+  5  WHERE EMPNO=(SELECT MGR
+  6  FROM EMP
+  7  WHERE ENAME='FORD'));
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         1                                                                                          
+
+SQL> SPOOL OFF

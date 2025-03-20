@@ -1,0 +1,288 @@
+SQL> 
+SQL> --21.
+
+
+  1* SELECT * FROM DEPT
+SQL> /
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> --1.
+
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE  DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5* WHERE ENAME='SMITH')
+SQL> /
+
+DNAME                                                                                               
+--------------                                                                                      
+RESEARCH                                                                                            
+
+SQL> 
+SQL> --22.
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME='KING');
+
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+ACCOUNTING     NEW YORK                                                                             
+
+SQL> 
+SQL> --23.
+SQL> SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE EMPNO=7902);
+
+LOC                                                                                                 
+-------------                                                                                       
+DALLAS                                                                                              
+
+SQL> 
+SQL> --24.
+SQL> SELECT DNAME,LOC,DEPTNO
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME LIKE '%R');
+WHERE DEPTNO=(SELECT DEPTNO
+              *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> 
+SQL> --25.
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE JOB='PRESIDENT');
+
+DNAME                                                                                               
+--------------                                                                                      
+ACCOUNTING                                                                                          
+
+SQL> 
+SQL> --26.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME='ACCOUNTING');
+
+ENAME                                                                                               
+----------                                                                                          
+CLARK                                                                                               
+KING                                                                                                
+MILLER                                                                                              
+
+SQL> 
+SQL> --27.
+
+
+  1  SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5* WHERE LOC='CHICAGO')
+SQL> /
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+ALLEN            1600                                                                               
+WARD             1250                                                                               
+MARTIN           1250                                                                               
+BLAKE            2850                                                                               
+TURNER           1500                                                                               
+JAMES             950                                                                               
+
+6 rows selected.
+
+SQL> --28.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME='SALES');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO               
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------               
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30               
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30               
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30               
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30               
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30               
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30               
+
+6 rows selected.
+
+SQL> --29.
+
+  1  SELECT EMP.*,SAL*12
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5* WHERE LOC='NEW YORK')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     SAL*12    
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------    
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10      29400    
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10      60000    
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10      15600    
+
+SQL> --30.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME='OPERATIONS');
+
+no rows selected
+
+SQL> --31.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL>(SELECT SAL
+  4  FROM EMP
+  5  WHERE ENAME='SCOTT')AND DEPTNO=(SELECT DEPTNO
+  6  FROM DEPT
+  7  WHERE DNAME='ACCOUNTING');
+
+ENAME                                                                                               
+----------                                                                                          
+KING                                                                                                
+
+SQL> --32.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB='MANAGER' AND DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE LOC='CHICAGO');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO               
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------               
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30               
+
+SQL> 
+SQL> --33.
+SQL> SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE SAL>(SELECT SAL
+  4  FROM EMP
+  5  WHERE ENAME='KING') AND DEPTNO=(SELECT DEPTNO
+  6  FROM DEPT
+  7  WHERE DNAME='ACCOUNTING');
+
+no rows selected
+
+SQL> 
+SQL> --34.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB='SALESMAN' AND DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME='SALES');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO               
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------               
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30               
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30               
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30               
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30               
+
+SQL> 
+SQL> --35.
+
+  1  SELECT ENAME,SAL,JOB,HIREDATE
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME='OPERATIONS') AND HIREDATE<(SELECT HIREDATE
+  6  FROM EMP
+  7* WHERE ENAME='KING')
+  8  /
+
+no rows selected
+
+SQL> 
+SQL> --36.
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME LIKE '%S');
+WHERE DEPTNO=(SELECT DEPTNO
+              *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+
+SQL> --38.
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE SAL=800);
+
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+RESEARCH       DALLAS                                                                               
+
+SQL> 
+SQL> --39.
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE COMM IS NOT NULL);
+WHERE DEPTNO=(SELECT DEPTNO
+              *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> --40.
+
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5* WHERE COMM IS NOT NULL) AND DEPTNO=40
+SQL> /
+WHERE DEPTNO=(SELECT DEPTNO
+              *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> --37.
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5* WHERE ENAME LIKE '%A%')
+SQL> /
+WHERE DEPTNO=(SELECT DEPTNO
+              *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> SPOOL OFF

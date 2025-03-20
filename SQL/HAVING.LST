@@ -1,0 +1,159 @@
+SQL> 
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB='CLERK'
+  4  GROUP BY DEPTNO
+  5  HAVING COUNT(*)>=2;
+
+  COUNT(*)     DEPTNO                                                                               
+---------- ----------                                                                               
+         2         20                                                                               
+
+SQL> 
+SQL> --2.
+SQL> SELECT SUM(SAL),DEPTNO
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  HAVING COUNT(*)>=4;
+
+  SUM(SAL)     DEPTNO                                                                               
+---------- ----------                                                                               
+      9400         30                                                                               
+     10875         20                                                                               
+
+SQL> 
+SQL> --3.
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE SAL>1200
+  4  GROUP BY JOB
+  5  HAVING SUM(SAL)>3800;
+
+  COUNT(*) JOB                                                                                      
+---------- ---------                                                                                
+         4 SALESMAN                                                                                 
+         1 PRESIDENT                                                                                
+         3 MANAGER                                                                                  
+         2 ANALYST                                                                                  
+
+SQL> --4.
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB='MANAGER'
+  4  GROUP BY DEPTNO
+  5  HAVING COUNT(JOB)>=2;
+
+no rows selected
+
+SQL> --5.
+SQL> SELECT MAX(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB
+  4  HAVING MAX(SAL)>2600;
+
+  MAX(SAL) JOB                                                                                      
+---------- ---------                                                                                
+      5000 PRESIDENT                                                                                
+      2975 MANAGER                                                                                  
+      3000 ANALYST                                                                                  
+
+SQL> --6.
+SQL> SELECT SAL
+  2  ED
+  3  ;
+
+*
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),SAL
+  2  FROM EMP
+  3  GROUP BY SAL
+  4* HAVIN COUNT(*)>1
+  5  /
+HAVIN COUNT(*)>1
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),SAL
+  2  FROM EMP
+  3  GROUP BY SAL
+  4* HAVING COUNT(*)>1
+SQL> /
+
+  COUNT(*)        SAL                                                                               
+---------- ----------                                                                               
+         2       1250                                                                               
+         2       3000                                                                               
+
+SQL> --7.
+SQL> SELECT COUNT(*),HIREDATE
+  2  FROM EMP
+  3  GROUP BY HIREDATE
+  4  HAVING COUNT(*)>1;
+
+  COUNT(*) HIREDATE                                                                                 
+---------- ---------                                                                                
+         2 03-DEC-81                                                                                
+
+SQL> --8.
+SQL> SELECT AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  HAVING AVG(SAL)<3000;
+
+  AVG(SAL)     DEPTNO                                                                               
+---------- ----------                                                                               
+1566.66667         30                                                                               
+      2175         20                                                                               
+2916.66667         10                                                                               
+
+SQL> --9.
+SQL> SELECT COUNT(*)DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5  HAVING COUNT(*)>=3;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+         5                                                                                          
+         4                                                                                          
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)>=3
+SQL> /
+
+  COUNT(*)     DEPTNO                                                                               
+---------- ----------                                                                               
+         5         30                                                                               
+         4         20                                                                               
+
+SQL> --10.
+SQL> SELECT MAX(SAL),MIN(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB
+  4  HAVING MIN(SAL)>1000 AND MAX(SAL)<5000;
+
+  MAX(SAL)   MIN(SAL) JOB                                                                           
+---------- ---------- ---------                                                                     
+      1600       1250 SALESMAN                                                                      
+      2975       2450 MANAGER                                                                       
+      3000       3000 ANALYST                                                                       
+
+SQL> SPOOL OFF

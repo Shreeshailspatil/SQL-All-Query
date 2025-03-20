@@ -1,0 +1,658 @@
+SQL> 
+SQL> --1.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SUBSTR(ENAME,1,1) IN ('A','S','T');
+
+ENAME                                                                                               
+----------                                                                                          
+SMITH                                                                                               
+ALLEN                                                                                               
+SCOTT                                                                                               
+TURNER                                                                                              
+ADAMS                                                                                               
+
+SQL> 
+SQL> 
+SQL> --2.
+SQL> SELECT ENAME
+  2  
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,3,1)=ENAME
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,1,3)=ENAME
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SUBSTR(ENAME,3,1)
+  4* GROUP BY ENAME
+SQL> /
+GROUP BY ENAME
+*
+ERROR at line 4:
+ORA-00920: invalid relational operator 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,3,1)
+SQL> /
+WHERE SUBSTR(ENAME,3,1)
+                      *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SUBSTR(ENAME,1,3)
+  2* FROM EMP
+  3  /
+
+SUBSTR(ENAME                                                                                        
+------------                                                                                        
+SMI                                                                                                 
+ALL                                                                                                 
+WAR                                                                                                 
+JON                                                                                                 
+MAR                                                                                                 
+BLA                                                                                                 
+CLA                                                                                                 
+SCO                                                                                                 
+KIN                                                                                                 
+TUR                                                                                                 
+ADA                                                                                                 
+JAM                                                                                                 
+FOR                                                                                                 
+MIL                                                                                                 
+
+14 rows selected.
+
+SQL> --3.
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SUBSTR(ENAME,ENAME/2);
+WHERE SUBSTR(ENAME,ENAME/2)
+                          *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  SUBSTR(ENAME,ENAME/2)
+  2* FROM EMP
+  3  /
+SELECT  SUBSTR(ENAME,ENAME/2)
+                     *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  SUBSTR(ENAME,LENGTH()/2)
+  2* FROM EMP
+SQL> /
+SELECT  SUBSTR(ENAME,LENGTH()/2)
+                     *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  SUBSTR(ENAME,LENGTH/2)
+  2* FROM EMP
+SQL> /
+SELECT  SUBSTR(ENAME,LENGTH/2)
+                     *
+ERROR at line 1:
+ORA-00904: "LENGTH": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  SUBSTR(ENAME,LENGTH(ENAME)/2)
+  2* FROM EMP
+SQL> /
+
+SUBSTR(ENAME,LENGTH(ENAME)/2)                                                                       
+----------------------------------------                                                            
+MITH                                                                                                
+LLEN                                                                                                
+ARD                                                                                                 
+ONES                                                                                                
+RTIN                                                                                                
+LAKE                                                                                                
+LARK                                                                                                
+COTT                                                                                                
+ING                                                                                                 
+RNER                                                                                                
+DAMS                                                                                                
+AMES                                                                                                
+ORD                                                                                                 
+LLER                                                                                                
+
+14 rows selected.
+
+SQL> --4.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  SUBSTR(ENAME,LENGTH(ENAME)/-2)
+  2* FROM EMP
+SQL> /
+
+SUBSTR(ENAME,LENGTH(ENAME)/-2)                                                                      
+----------------------------------------                                                            
+TH                                                                                                  
+EN                                                                                                  
+RD                                                                                                  
+ES                                                                                                  
+TIN                                                                                                 
+KE                                                                                                  
+RK                                                                                                  
+TT                                                                                                  
+NG                                                                                                  
+NER                                                                                                 
+MS                                                                                                  
+ES                                                                                                  
+RD                                                                                                  
+LER                                                                                                 
+
+14 rows selected.
+
+SQL> --5.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  SUBSTR(ENAME,1,3) IN('A')
+  2* FROM EMP
+SQL> /
+SELECT  SUBSTR(ENAME,1,3) IN('A')
+                          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE  SUBSTR(ENAME,1,3) IN('A')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE  SUBSTR(ENAME,3,1) IN('A')
+SQL> /
+
+ENAME                                                                                               
+----------                                                                                          
+BLAKE                                                                                               
+CLARK                                                                                               
+ADAMS                                                                                               
+
+SQL> --6.
+SQL> select ename
+  2  from emp
+  3  where substr(ename,2,-2);
+where substr(ename,2,-2)
+                       *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select ename
+  2  from emp
+  3* where substr(ename,2,-2)=ename
+SQL> /
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select substr(ename,2,-2)=ename
+  2* from emp
+SQL> /
+select substr(ename,2,-2)=ename
+                         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select substr(ename,2,length(ename)-1) 
+  2* from emp
+SQL> /
+
+SUBSTR(ENAME,2,LENGTH(ENAME)-1)                                                                     
+------------------------------------                                                                
+MITH                                                                                                
+LLEN                                                                                                
+ARD                                                                                                 
+ONES                                                                                                
+ARTIN                                                                                               
+LAKE                                                                                                
+LARK                                                                                                
+COTT                                                                                                
+ING                                                                                                 
+URNER                                                                                               
+DAMS                                                                                                
+AMES                                                                                                
+ORD                                                                                                 
+ILLER                                                                                               
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select substr(ename,2,length(ename)-2) 
+  2* from emp
+SQL> /
+
+SUBSTR(ENAME,2,LENGTH(ENAME)-2)                                                                     
+------------------------------------                                                                
+MIT                                                                                                 
+LLE                                                                                                 
+AR                                                                                                  
+ONE                                                                                                 
+ARTI                                                                                                
+LAK                                                                                                 
+LAR                                                                                                 
+COT                                                                                                 
+IN                                                                                                  
+URNE                                                                                                
+DAM                                                                                                 
+AME                                                                                                 
+OR                                                                                                  
+ILLE                                                                                                
+
+14 rows selected.
+
+SQL> --7.
+SQL> select ename
+  2  from emp
+  3  where substr(ename,reverse(length()/2)));
+where substr(ename,reverse(length()/2)))
+                           *
+ERROR at line 3:
+ORA-00909: invalid number of arguments 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  substr(ename,reverse(length()/2)))
+  2* from emp
+  3  /
+select  substr(ename,reverse(length()/2)))
+                             *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  substr(ename,reverse(length(ename)/2))
+  2* from emp
+SQL> /
+select  substr(ename,reverse(length(ename)/2))
+                                          *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected CHAR got NUMBER 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  substr(ename,reverse(length(ename)/-2))
+  2* from emp
+SQL> /
+select  substr(ename,reverse(length(ename)/-2))
+                                          *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected CHAR got NUMBER 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/2),reverse(substr(ename,length(ename)/-2)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/2),REVERSE(SUBSTR(ENAME,LENGTH(ENAME)/-2)))                       
+--------------------------------------------------------------------------------                    
+MITHHT                                                                                              
+LLENNE                                                                                              
+ARDDR                                                                                               
+ONESSE                                                                                              
+RTINNIT                                                                                             
+LAKEEK                                                                                              
+LARKKR                                                                                              
+COTTTT                                                                                              
+INGGN                                                                                               
+RNERREN                                                                                             
+DAMSSM                                                                                              
+AMESSE                                                                                              
+ORDDR                                                                                               
+LLERREL                                                                                             
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)),reverse(substr(ename,length(ename)/-2)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)),REVERSE(SUBSTR(ENAME,LENGTH(ENAME)/-2)))                         
+--------------------------------------------------------------------------------                    
+HHT                                                                                                 
+NNE                                                                                                 
+DDR                                                                                                 
+SSE                                                                                                 
+NNIT                                                                                                
+EEK                                                                                                 
+KKR                                                                                                 
+TTT                                                                                                 
+GGN                                                                                                 
+RREN                                                                                                
+SSM                                                                                                 
+SSE                                                                                                 
+DDR                                                                                                 
+RREL                                                                                                
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/1),reverse(substr(ename,length(ename)/-2)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/1),REVERSE(SUBSTR(ENAME,LENGTH(ENAME)/-2)))                       
+--------------------------------------------------------------------------------                    
+HHT                                                                                                 
+NNE                                                                                                 
+DDR                                                                                                 
+SSE                                                                                                 
+NNIT                                                                                                
+EEK                                                                                                 
+KKR                                                                                                 
+TTT                                                                                                 
+GGN                                                                                                 
+RREN                                                                                                
+SSM                                                                                                 
+SSE                                                                                                 
+DDR                                                                                                 
+RREL                                                                                                
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)/-2)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/3),REVERSE(SUBSTR(ENAME,LENGTH(ENAME)/-2)))                       
+--------------------------------------------------------------------------------                    
+SMITHHT                                                                                             
+ALLENNE                                                                                             
+WARDDR                                                                                              
+JONESSE                                                                                             
+ARTINNIT                                                                                            
+BLAKEEK                                                                                             
+CLARKKR                                                                                             
+SCOTTTT                                                                                             
+KINGGN                                                                                              
+URNERREN                                                                                            
+ADAMSSM                                                                                             
+JAMESSE                                                                                             
+FORDDR                                                                                              
+ILLERREL                                                                                            
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)/-3)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/3),REVERSE(SUBSTR(ENAME,LENGTH(ENAME)/-3)))                       
+--------------------------------------------------------------------------------                    
+SMITHH                                                                                              
+ALLENN                                                                                              
+WARDD                                                                                               
+JONESS                                                                                              
+ARTINNI                                                                                             
+BLAKEE                                                                                              
+CLARKK                                                                                              
+SCOTTT                                                                                              
+KINGG                                                                                               
+URNERRE                                                                                             
+ADAMSS                                                                                              
+JAMESS                                                                                              
+FORDD                                                                                               
+ILLERRE                                                                                             
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)-3,1))
+  2* from emp
+SQL> /
+from emp
+*
+ERROR at line 2:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)-3,1)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/3),REVERSE                                                        
+--------------------------------------------                                                        
+SMITHM                                                                                              
+ALLENL                                                                                              
+WARDW                                                                                               
+JONESO                                                                                              
+ARTINR                                                                                              
+BLAKEL                                                                                              
+CLARKL                                                                                              
+SCOTTC                                                                                              
+KINGK                                                                                               
+URNERR                                                                                              
+ADAMSD                                                                                              
+JAMESA                                                                                              
+FORDF                                                                                               
+ILLERL                                                                                              
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/2),reverse(substr(ename,length(ename)-2,1)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/2),REVERSE                                                        
+--------------------------------------------                                                        
+MITHI                                                                                               
+LLENL                                                                                               
+ARDA                                                                                                
+ONESN                                                                                               
+RTINT                                                                                               
+LAKEA                                                                                               
+LARKA                                                                                               
+COTTO                                                                                               
+INGI                                                                                                
+RNERN                                                                                               
+DAMSA                                                                                               
+AMESM                                                                                               
+ORDO                                                                                                
+LLERL                                                                                               
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)-2,1)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/3),REVERSE                                                        
+--------------------------------------------                                                        
+SMITHI                                                                                              
+ALLENL                                                                                              
+WARDA                                                                                               
+JONESN                                                                                              
+ARTINT                                                                                              
+BLAKEA                                                                                              
+CLARKA                                                                                              
+SCOTTO                                                                                              
+KINGI                                                                                               
+URNERN                                                                                              
+ADAMSA                                                                                              
+JAMESM                                                                                              
+FORDO                                                                                               
+ILLERL                                                                                              
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3,1),reverse(substr(ename,length(ename)-2,1)))
+  2* from emp
+SQL> /
+
+CONCAT(S                                                                                            
+--------                                                                                            
+SI                                                                                                  
+AL                                                                                                  
+WA                                                                                                  
+JN                                                                                                  
+AT                                                                                                  
+BA                                                                                                  
+CA                                                                                                  
+SO                                                                                                  
+KI                                                                                                  
+UN                                                                                                  
+AA                                                                                                  
+JM                                                                                                  
+FO                                                                                                  
+IL                                                                                                  
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)-2,1)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/3),REVERSE                                                        
+--------------------------------------------                                                        
+SMITHI                                                                                              
+ALLENL                                                                                              
+WARDA                                                                                               
+JONESN                                                                                              
+ARTINT                                                                                              
+BLAKEA                                                                                              
+CLARKA                                                                                              
+SCOTTO                                                                                              
+KINGI                                                                                               
+URNERN                                                                                              
+ADAMSA                                                                                              
+JAMESM                                                                                              
+FORDO                                                                                               
+ILLERL                                                                                              
+
+14 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select  concat(substr(ename,length(ename)/3),reverse(substr(ename,length(ename)-2)))
+  2* from emp
+SQL> /
+
+CONCAT(SUBSTR(ENAME,LENGTH(ENAME)/3),REVERSE(SUBSTR(ENAME,LENGTH(ENAME)-2)))                        
+--------------------------------------------------------------------------------                    
+SMITHHTI                                                                                            
+ALLENNEL                                                                                            
+WARDDRA                                                                                             
+JONESSEN                                                                                            
+ARTINNIT                                                                                            
+BLAKEEKA                                                                                            
+CLARKKRA                                                                                            
+SCOTTTTO                                                                                            
+KINGGNI                                                                                             
+URNERREN                                                                                            
+ADAMSSMA                                                                                            
+JAMESSEM                                                                                            
+FORDDRO                                                                                             
+ILLERREL                                                                                            
+
+14 rows selected.
+
+SQL> SPOOL OF

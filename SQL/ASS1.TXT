@@ -1,0 +1,237 @@
+SQL> 
+SQL> --1.RETRIVE THE TRAINNAME WITH AN ALIAS AS `TRAIN SERVICE`.--
+SQL> 
+SQL> SELECT *
+  2  FROM TRAIN
+  3  ;
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+         1                                                                      
+Express 101                                                                     
+Express                                                   500                   
+                                                                                
+         2                                                                      
+Superfast 202                                                                   
+Superfast                                                 600                   
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+                                                                                
+         3                                                                      
+Local 303                                                                       
+Local                                                     300                   
+                                                                                
+         4                                                                      
+Rajdhani 404                                                                    
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+Luxury                                                    800                   
+                                                                                
+
+
+  1  SELECT TRAINNAME AS "TRAIN SERVICE"
+  2* FROM TRAIN
+SQL> /
+
+TRAIN SERVICE                                                                   
+--------------------------------------------------------------------------------
+Express 101                                                                     
+Superfast 202                                                                   
+Local 303                                                                       
+Rajdhani 404                                                                    
+
+SQL> 
+SQL> --2.RETRIVE TRAIN THAT HAVE SEATS MORE THAN 400 **AND** ARE OF TYPE 'Express'.--
+SQL> select * from train
+  2  where totalseats>400 AND traintype='Express';
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+         1                                                                      
+Express 101                                                                     
+Express                                                   500                   
+                                                                                
+
+SQL> 
+SQL> --3.retrive station where 'StationName' starts with 'C'--
+
+
+
+
+
+  1  SELECT * FROM STATION
+  2* WHERE STATIONNAME like 'C%'
+SQL> /
+
+ STATIONID                                                                      
+----------                                                                      
+STATIONNAME                                                                     
+--------------------------------------------------------------------------------
+LOCATION                                                                        
+--------------------------------------------------------------------------------
+         1                                                                      
+Chennai Central                                                                 
+Chennai                                                                         
+                                                                                
+
+SQL> 
+SQL> --4.Retrive trains that have seats more than 400**OR** are type 'Local'.--
+SQL> select * from train
+  2  where totalseats>400 OR traintype='Local';
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+         1                                                                      
+Express 101                                                                     
+Express                                                   500                   
+                                                                                
+         2                                                                      
+Superfast 202                                                                   
+Superfast                                                 600                   
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+                                                                                
+         3                                                                      
+Local 303                                                                       
+Local                                                     300                   
+                                                                                
+         4                                                                      
+Rajdhani 404                                                                    
+
+   TRAINID                                                                      
+----------                                                                      
+TRAINNAME                                                                       
+--------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                   
+-------------------------------------------------- ----------                   
+Luxury                                                    800                   
+                                                                                
+
+SQL> set pages 100 lines 100
+SQL> select * from train
+  2  where totalseats>400 AND traintype='Local';
+
+no rows selected
+
+SQL> 
+SQL> --5.retrive passengers whose name ends with 'Singh'.--
+SQL> select  passengername from ticket
+  2  where passengername like '%Singh';
+
+PASSENGERNAME                                                                                       
+----------------------------------------------------------------------------------------------------
+Neha Singh                                                                                          
+
+SQL> 
+SQL> --6.Retrive trains that have seats greater than or equal to 500--
+SQL> 
+SQL> select trainname from train
+  2  where totalseats>=500;
+
+TRAINNAME                                                                                           
+----------------------------------------------------------------------------------------------------
+Express 101                                                                                         
+Superfast 202                                                                                       
+Rajdhani 404                                                                                        
+
+SQL> 
+SQL> --7.Retrive trains that have seats less than or equal to 300--
+SQL> select trainname from train
+  2  where totalseats<=300;
+
+TRAINNAME                                                                                           
+----------------------------------------------------------------------------------------------------
+Local 303                                                                                           
+
+SQL> 
+SQL> --8.Retrive trains that do not have 500 seats.---
+SQL> select * from train
+  2  where totalseats not in 500 ;
+
+   TRAINID                                                                                          
+----------                                                                                          
+TRAINNAME                                                                                           
+----------------------------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                                       
+-------------------------------------------------- ----------                                       
+         2                                                                                          
+Superfast 202                                                                                       
+Superfast                                                 600                                       
+                                                                                                    
+         3                                                                                          
+Local 303                                                                                           
+Local                                                     300                                       
+                                                                                                    
+         4                                                                                          
+Rajdhani 404                                                                                        
+Luxury                                                    800                                       
+                                                                                                    
+
+SQL> 
+SQL> --9.Retrive trains where `trainId` is either 1,2,or,3.--
+SQL> select * from train
+  2  where TrainID in (1,2,3);
+
+   TRAINID                                                                                          
+----------                                                                                          
+TRAINNAME                                                                                           
+----------------------------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                                       
+-------------------------------------------------- ----------                                       
+         1                                                                                          
+Express 101                                                                                         
+Express                                                   500                                       
+                                                                                                    
+         2                                                                                          
+Superfast 202                                                                                       
+Superfast                                                 600                                       
+                                                                                                    
+         3                                                                                          
+Local 303                                                                                           
+Local                                                     300                                       
+                                                                                                    
+
+SQL> 
+SQL> --10.Retrive trains where TrainID is not 1,2,or 3.--
+SQL> select * from train
+  2  where trainid not in (1,2,3);
+
+   TRAINID                                                                                          
+----------                                                                                          
+TRAINNAME                                                                                           
+----------------------------------------------------------------------------------------------------
+TRAINTYPE                                          TOTALSEATS                                       
+-------------------------------------------------- ----------                                       
+         4                                                                                          
+Rajdhani 404                                                                                        
+Luxury                                                    800                                       
+                                                                                                    
+
+SQL> SPOOL OFF
